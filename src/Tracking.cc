@@ -563,8 +563,8 @@ void Tracking::newParameterLoader(Settings *settings) {
     mK_(0,2) = mpCamera->getParameter(2);
     mK_(1,2) = mpCamera->getParameter(3);
 
-    if((mSensor==System::STEREO || mSensor==System::IMU_STEREO || mSensor==System::IMU_RGBD || mSensor==System::IMU_MULTI) &&
-        settings->cameraType() == Settings::KannalaBrandt){
+    if(mSensor==System::STEREO || mSensor==System::IMU_STEREO || mSensor==System::IMU_RGBD || mSensor==System::IMU_MULTI)
+    {
         mpCamera2 = settings->camera2();
         mpCamera2 = mpAtlas->AddCamera(mpCamera2);
 
@@ -1474,6 +1474,7 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat 
 {
     mImGray = imRectLeft;
     cv::Mat imGrayRight = imRectRight;
+    mImLeft = imRectLeft;
     mImRight = imRectRight;
 
     if(mImGray.channels()==3)
@@ -1544,6 +1545,7 @@ Sophus::SE3f Tracking::GrabImageMulti(const cv::Mat &imRectLeft, const cv::Mat &
     cv::Mat imGrayRight = imRectRight;
     cv::Mat imGraySideLeft = imRectSideLeft;
     cv::Mat imGraySideRight = imRectSideRight;
+    mImLeft = imRectLeft;
     mImRight = imRectRight;
     mImSideLeft = imRectSideLeft;
     mImSideRight = imRectSideRight;
