@@ -1,0 +1,201 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "PinHole"
+# ZED_X Left Camera
+Camera1.enable: 1
+# ZED_X Left Camera calibration and distortion parameters (OpenCV)
+Camera1.fx: 1280.41386785 #
+Camera1.fy: 1280.3835316 #
+Camera1.cx: 960.74564363 #
+Camera1.cy: 591.80465461 #
+
+# ZED_X Left Camera Equidistant distortion parameters
+Camera1.k1: -0.05917942 #
+Camera1.k2: -0.06552709 #
+Camera1.p1: -0.00033699 #
+Camera1.p2: -0.00015821 #
+
+
+# ZED_X Right Camera
+Camera2.enable: 1
+# ZED_X Right Camera calibration and distortion parameters (OpenCV)
+Camera2.fx: 1278.20423672 #
+Camera2.fy: 1278.46561857 #
+Camera2.cx: 951.67010524 #
+Camera2.cy: 636.47836275 #
+
+# ZED_X Right Camera Equidistant distortion parameters
+Camera2.k1: -0.06152993 #
+Camera2.k2: -0.06198818 #
+Camera2.p1: -0.00025334 #
+Camera2.p2: -0.00035563 #
+
+
+# ZED_One Left Camera
+Camera3.enable: 1
+# ZED_One Left Camera calibration and distortion parameters (OpenCV)
+Camera3.fx: 1271.82474841 #
+Camera3.fy: 1271.91847816 #
+Camera3.cx: 914.73789377 #
+Camera3.cy: 611.59087203 #
+
+# ZED_One Left Camera Equidistant distortion parameters
+Camera3.k1: -0.06352983 #
+Camera3.k2: -0.05962129 #
+Camera3.p1: -0.0012881 #
+Camera3.p2: -0.00019704 #
+
+
+# ZED_One Right Camera
+Camera4.enable: 1
+# ZED_One Right Camera calibration and distortion parameters (OpenCV)
+Camera4.fx: 1273.26331419 #
+Camera4.fy: 1273.38715567 #
+Camera4.cx: 931.41605992 #
+Camera4.cy: 650.79653096 #
+
+# ZED_One Right Camera Equidistant distortion parameters
+Camera4.k1: -0.0623 #
+Camera4.k2: -0.06045158 #
+Camera4.p1: 0.00002148 #
+Camera4.p2: -0.00000094 #
+
+# Transformation matrix from right camera to left camera [from c2 to c1]
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  # data: [ 0.9999946,   0.00035359,  0.00327479,  0.11991645,
+  #         -0.00032997,  0.99997395, -0.00721154, -0.000045  ,
+  #         -0.00327724,  0.00721042,  0.99996865, -0.00077719,
+  #          0, 0, 0, 1]
+  data: [ 0.99999457, -0.00032996, -0.00327724,  0.11991899,
+          0.00035359,  0.99997394,  0.00721043,  0.00003144,
+          0.00327478, -0.00721156,  0.99996864,  0.00000864,
+           0, 0, 0, 1]
+
+# Overlapping area between images (to be updated)
+Camera1.overlappingBegin: 0
+Camera1.overlappingEnd: 1920
+
+Camera2.overlappingBegin: 0
+Camera2.overlappingEnd: 1920
+
+Camera3.overlappingBegin: 0   #Left and Side Left
+Camera3.overlappingEnd: 1920
+
+Camera4.overlappingBegin: 0   #Right and Side Right
+Camera4.overlappingEnd: 1920
+
+# Camera resolution
+Camera.width: 1920
+Camera.height: 1200
+
+# Camera frames per second
+Camera.fps: 30
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+# Close/Far threshold. Baseline times.
+Stereo.ThDepth: 40.0
+
+# # ZEDX_Left to XSENSE_IMU
+# # Transformation from ZEDX_Left to XSENSE_IMU
+# IMU.T_b_c1: !!opencv-matrix
+#   rows: 4
+#   cols: 4
+#   dt: f
+#   data: [-0.00191266, 0.00297417, 0.99999375, 0.0121479,
+#         -0.99997317, -0.00707693, -0.00189157, 0.03453897,
+#           0.00707126, -0.99997054, 0.00298762, -0.00107773,
+#           0, 0, 0, 1]
+
+# Transformation from ZEDX_Left to ZEDX_IMU 
+IMU.T_b_c1: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ -0.00191266,  0.00297417,  0.99999375,  0.0121479,
+          -0.99997317, -0.00707693, -0.00189157,  0.03453897,
+          0.00707126, -0.99997054,  0.00298762, -0.00107773,
+          0, 0, 0, 1]
+
+# ZED_One Left to ZEDX_IMU
+# Transformation from side-left camera to body-frame (imu)
+IMU.T_b_c3: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.6925006,  -0.04205233,  0.72019064,  0.03690092,
+          -0.7030963,   0.18421265,  0.6868197,   0.18756075,
+          -0.1615506,  -0.9819864,   0.09800053, -0.01655837,
+          0, 0, 0, 1]
+
+# ZED_One Right to ZEDX_IMU
+# Transformation from side-right camera to body-frame (imu)
+IMU.T_b_c4: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [-0.64722383, -0.05807829,  0.7600844,   0.03564082,
+          -0.74248224, -0.17784895, -0.6458249, -0.23938982,
+          0.17268862, -0.9823424,   0.07198599, -0.01404682,
+          0, 0, 0, 1]
+
+
+# IMU noise
+IMU.NoiseGyro: 0.000171 # 0.004 (VINS) # 0.00016 (TUM) # 0.00016    # rad/s^0.5
+IMU.NoiseAcc: 0.0086 # 0.04 (VINS) # 0.0028 (TUM) # 0.0028     # m/s^1.5
+IMU.GyroWalk: 3.1e-06 # 0.000022 (VINS and TUM) rad/s^1.5
+IMU.AccWalk: 0.00022 # 0.0004 (VINS) # 0.00086 # 0.00086    # m/s^2.5
+IMU.Frequency: 400.0
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 1250
+
+# ORB Extractor: Scale factor between levels in the scale pyramid
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid
+ORBextractor.nLevels: 12
+
+# ORB Extractor: Fast threshold
+# Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+# Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
+# You can lower these values if your images have low contrast
+ORBextractor.iniThFAST: 12
+ORBextractor.minThFAST: 5
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0
+Viewer.imageViewScale: 0.45
+
+#--------------------------------------------------------------------------------------------
+# Map Parameters
+#--------------------------------------------------------------------------------------------
+# If the LoadFile doesn't exist, the system give a message and create a new Atlas from scratch
+#System.LoadAtlasFromFile: "saved_map"
+#
+# The store file is created from the current session, if a file with the same name exists it is deleted
+#System.SaveAtlasToFile: "saved_map"

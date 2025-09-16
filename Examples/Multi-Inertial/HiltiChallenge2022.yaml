@@ -7,6 +7,7 @@ File.version: "1.0"
 
 Camera.type: "KannalaBrandt8"
 
+Camera1.enable: 1
 # Left Camera calibration and distortion parameters (OpenCV)
 Camera1.fx: 352.8913557983792
 Camera1.fy: 352.7847153190321
@@ -19,6 +20,7 @@ Camera1.k2: 0.003107640448830285
 Camera1.k3: -0.0037427054744242987
 Camera1.k4: 0.0007777186933455688
 
+Camera2.enable: 1
 # Right Camera calibration and distortion parameters (OpenCV)
 Camera2.fx: 351.8009892830421
 Camera2.fy: 351.6280684414713
@@ -31,6 +33,7 @@ Camera2.k2: 0.0041968714754669675
 Camera2.k3: -0.003800042168422922
 Camera2.k4: 0.0006032811514173166
 
+Camera3.enable: 1
 # Side-Left Camera calibration and distortion parameters (OpenCV)
 Camera3.fx: 349.15902033416296
 Camera3.fy: 349.19507664547535
@@ -43,6 +46,7 @@ Camera3.k2: -0.001592762006804195
 Camera3.k3: 0.00026012483984812467
 Camera3.k4: -0.0004093066719415896
 
+Camera4.enable: 1
 # Side-Right Camera calibration and distortion parameters (OpenCV)
 Camera4.fx: 350.4224918214405
 Camera4.fy: 350.42698873973904

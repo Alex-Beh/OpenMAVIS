@@ -88,22 +88,57 @@ int main(int argc, char **argv)
     int tot_images = 0;
     for (seq = 0; seq<num_seq; seq++)
     {
-        cout << "Loading images for sequence " << seq << "...";
+        cout << "Loading images for sequence " << seq << "..." << endl;
 
         string pathSeq(argv[(2*seq) + 3]);
         string pathTimeStamps(argv[(2*seq) + 4]);
 
+        cout << "pathSeq: " << pathSeq << endl;
+
+        // Oxford Dataset
+        // 1 0 4 3 --> 1 0 3 2
+        // camera_topic: /alphasense_driver_ros/cam0/compressed --> cam0
+        // camera_topic: /alphasense_driver_ros/cam1/compressed --> cam1
+        // camera_topic: /alphasense_driver_ros/cam3/compressed --> cam2
+        // camera_topic: /alphasense_driver_ros/cam4/compressed --> cam3
+
+        // Oxford Dataset
+        // string pathCam0 = pathSeq + "/mav0/cam1/data";  // Left Camera
+        // string pathCam1 = pathSeq + "/mav0/cam0/data";  // Right Camera
+        // string pathCam2 = pathSeq + "/mav0/cam3/data";  // SideLeft Camera
+        // string pathCam3 = pathSeq + "/mav0/cam2/data";  // Sideright Camera
+        // string pathImu = pathSeq + "/mav0/imu0/data.csv";
+
+        // Hilti Dataset
         string pathCam0 = pathSeq + "/mav0/cam1/data";  // Left Camera
         string pathCam1 = pathSeq + "/mav0/cam0/data";  // Right Camera
         string pathCam2 = pathSeq + "/mav0/cam4/data";  // SideLeft Camera
         string pathCam3 = pathSeq + "/mav0/cam3/data";  // Sideright Camera
         string pathImu = pathSeq + "/mav0/imu0/data.csv";
-        LoadImages(pathCam0, pathCam1, pathCam2, pathCam3, pathTimeStamps, vstrImageLeft[seq], vstrImageRight[seq], vstrImageSideLeft[seq], vstrImageSideRight[seq], vTimestampsCam[seq]);
-        cout << "LOADED!" << endl;
 
-        cout << "Loading IMU for sequence " << seq << "...";
+        // HMGICS Dataset
+        // string pathCam0 = pathSeq + "/mav0/cam1/data";  // Left Camera
+        // string pathCam1 = pathSeq + "/mav0/cam0/data";  // Right Camera
+        // string pathCam2 = pathSeq + "/mav0/cam2/data";  // SideLeft Camera
+        // string pathCam3 = pathSeq + "/mav0/cam3/data";  // Sideright Camera
+        // string pathImu = pathSeq + "/mav0/imu1/data.csv";
+
+        cout << "pathCam0: " << pathCam0 << endl;
+        cout << "pathCam1: " << pathCam1 << endl;
+        cout << "pathCam2: " << pathCam2 << endl;
+        cout << "pathCam3: " << pathCam3 << endl;
+        cout << "pathTimeStamps: " << pathTimeStamps << endl;
+
+        LoadImages(pathCam0, pathCam1, pathCam2, pathCam3, pathTimeStamps, vstrImageLeft[seq], vstrImageRight[seq], vstrImageSideLeft[seq], vstrImageSideRight[seq], vTimestampsCam[seq]);
+        cout << "Loading Image for sequence " << seq << "... LOADED!" <<  endl;
+        cout << "Num of Left Camera: " << vstrImageLeft[seq].size() <<  endl;
+        cout << "Num of Right Camera: " << vstrImageRight[seq].size() <<  endl;
+        cout << "Num of SideLeft Camera: " << vstrImageSideLeft[seq].size() <<  endl;
+        cout << "Num of Sideright Camera: " << vstrImageSideRight[seq].size() <<  endl;
+        cout << "pathImu: " << pathImu << endl;
         LoadIMU(pathImu, vTimestampsImu[seq], vAcc[seq], vGyro[seq]);
-        cout << "LOADED!" << endl;
+        cout << "Loading IMU for sequence " << seq << "... LOADED!";
+        cout << "Num of IMU data: " << vTimestampsImu[seq].size() << endl;
 
         nImages[seq] = vstrImageLeft[seq].size();
         tot_images += nImages[seq];
@@ -129,6 +164,7 @@ int main(int argc, char **argv)
         cerr << "ERROR: Wrong path to settings" << endl;
         return -1;
     }
+    std::cout << "Path Setting: " << argv[2] << std::endl;
 
     // Vector for tracking time statistics
     vector<float> vTimesTrack;
@@ -152,11 +188,12 @@ int main(int argc, char **argv)
         int proccIm = 0;
         for(int ni=0; ni<nImages[seq]; ni++, proccIm++)
         {
+            std::cout << "seq " << ni << "-----------------------" << std::endl; 
             // Read left and right images from file
-            imLeft = cv::imread(vstrImageLeft[seq][ni],cv::IMREAD_UNCHANGED);
-            imRight = cv::imread(vstrImageRight[seq][ni],cv::IMREAD_UNCHANGED);
-            imSideLeft = cv::imread(vstrImageSideLeft[seq][ni],cv::IMREAD_UNCHANGED);
-            imSideRight = cv::imread(vstrImageSideRight[seq][ni],cv::IMREAD_UNCHANGED);
+            imLeft = cv::imread(vstrImageLeft[seq][ni], cv::IMREAD_UNCHANGED);
+            imRight = cv::imread(vstrImageRight[seq][ni], cv::IMREAD_UNCHANGED);
+            // imSideLeft = cv::imread(vstrImageSideLeft[seq][ni], cv::IMREAD_UNCHANGED);
+            // imSideRight = cv::imread(vstrImageSideRight[seq][ni], cv::IMREAD_UNCHANGED);
 
             if(imLeft.empty())
             {
@@ -172,22 +209,26 @@ int main(int argc, char **argv)
                 return 1;
             }
 
-            if(imSideLeft.empty())
-            {
-                cerr << endl << "Failed to load image at: "
-                     << string(vstrImageSideLeft[seq][ni]) << endl;
-                return 1;
-            }
+            // if(imSideLeft.empty())
+            // {
+            //     cerr << endl << "Failed to load image at: "
+            //          << string(vstrImageSideLeft[seq][ni]) << endl;
+            //     return 1;
+            // }
 
-            if(imSideRight.empty())
-            {
-                cerr << endl << "Failed to load image at: "
-                     << string(vstrImageSideRight[seq][ni]) << endl;
-                return 1;
-            }
+            // if(imSideRight.empty())
+            // {
+            //     cerr << endl << "Failed to load image at: "
+            //          << string(vstrImageSideRight[seq][ni]) << endl;
+            //     return 1;
+            // }
+
+            imSideLeft = imLeft;
+            imSideRight = imRight;
 
             double tframe = vTimestampsCam[seq][ni];
 
+            std::cout << "All images had been loaded with timestamp: " << tframe << std::endl;
             // Load imu measurements from previous frame
             vImuMeas.clear();
 
@@ -199,8 +240,9 @@ int main(int argc, char **argv)
                                                              vTimestampsImu[seq][first_imu[seq]]));
                     first_imu[seq]++;
                 }
+            std::cout << "Number of IMU between frames: " << vImuMeas.size() << std::endl;
 
-    #ifdef COMPILEDWITHC11
+    #ifdef COMPILEDWITHC17
             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
     #else
             std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
@@ -209,7 +251,7 @@ int main(int argc, char **argv)
             // Pass the images to the SLAM system
             Sophus::SE3f Twb = SLAM.TrackMulti(imLeft, imRight, imSideLeft, imSideRight, tframe, vImuMeas);
 
-    #ifdef COMPILEDWITHC11
+    #ifdef COMPILEDWITHC17
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     #else
             std::chrono::monotonic_clock::time_point t2 = std::chrono::monotonic_clock::now();
@@ -241,12 +283,9 @@ int main(int argc, char **argv)
 
             SLAM.ChangeDataset();
         }
-
-
     }
     // Stop all threads
     SLAM.Shutdown();
-
 
     // Save camera trajectory
     if (bFileName)
@@ -269,7 +308,7 @@ void LoadImages(const string &strPathLeft, const string &strPathRight, const str
                      const string &strPathTimes, vector<string> &vstrImageLeft, vector<string> &vstrImageRight, vector<string> &vstrImageSideLeft, vector<string> &vstrImageSideRight, vector<double> &vTimeStamps)
 {
     ifstream fTimes;
-    fTimes.open(strPathTimes.c_str());
+    fTimes.open(strPathTimes.c_str(), std::ios::in);
     vTimeStamps.reserve(5000);
     vstrImageLeft.reserve(5000);
     vstrImageRight.reserve(5000);
@@ -279,6 +318,8 @@ void LoadImages(const string &strPathLeft, const string &strPathRight, const str
     {
         string s;
         getline(fTimes,s);
+        if (s[0] == '#')
+            continue;
         if(!s.empty())
         {
             stringstream ss;
@@ -298,7 +339,7 @@ void LoadImages(const string &strPathLeft, const string &strPathRight, const str
 void LoadIMU(const string &strImuPath, vector<double> &vTimeStamps, vector<cv::Point3f> &vAcc, vector<cv::Point3f> &vGyro)
 {
     ifstream fImu;
-    fImu.open(strImuPath.c_str());
+    fImu.open(strImuPath.c_str(), std::ios::in);
     vTimeStamps.reserve(5000);
     vAcc.reserve(5000);
     vGyro.reserve(5000);
