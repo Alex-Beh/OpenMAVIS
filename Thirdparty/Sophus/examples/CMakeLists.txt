@@ -2,8 +2,19 @@ cmake_minimum_required(VERSION 3.24)
 
 project(SophusExample)
 
-file(READ "../SOPHUS_VERSION" SOPHUS_VERSION)
-find_package(Sophus ${SOPHUS_VERSION} REQUIRED)
+set(_sophus_version_requirement "${SOPHUS_VERSION}")
+if(NOT _sophus_version_requirement)
+  set(_sophus_version_file "${CMAKE_CURRENT_LIST_DIR}/../SOPHUS_VERSION")
+  if(EXISTS "${_sophus_version_file}")
+    file(READ "${_sophus_version_file}" _sophus_version_contents)
+    string(STRIP "${_sophus_version_contents}" _sophus_version_requirement)
+  else()
+    set(_sophus_version_requirement "1.0.0")
+  endif()
+endif()
+unset(_sophus_version_contents)
+unset(_sophus_version_file)
+find_package(Sophus ${_sophus_version_requirement} REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 
 # Release by default Turn on Debug with "-DCMAKE_BUILD_TYPE=Debug"

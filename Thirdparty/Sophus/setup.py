@@ -8,6 +8,19 @@ from setuptools import Extension, find_packages, setup
 from setuptools.command.build_ext import build_ext
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_VERSION = "1.0.0"
+
+
+def read_version():
+    version_file = Path(__file__).with_name("SOPHUS_VERSION")
+    if version_file.exists():
+        return version_file.read_text().strip()
+
+    env_version = os.environ.get("SOPHUS_VERSION")
+    if env_version:
+        return env_version
+
+    return DEFAULT_VERSION
 
 # Convert distutils Windows platform specifiers to CMake -A arguments
 PLAT_TO_CMAKE = {
@@ -141,7 +154,7 @@ def main():
     # logic and declaration, and simpler if you include description/version in a file.
     setup(
         name="sophus_pybind",
-        version=Path("SOPHUS_VERSION").read_text(),
+        version=read_version(),
         description="Sophus python API",
         long_description="Python API for sophus library",
         url="https://github.com/strasdat/sophus",

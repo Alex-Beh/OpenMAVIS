@@ -1,6 +1,23 @@
 cmake_minimum_required(VERSION 3.24)
 
-file(READ "SOPHUS_VERSION" SOPHUS_VERSION)
+set(SOPHUS_VERSION "" CACHE STRING "Sophus version string")
+set(_sophus_version "${SOPHUS_VERSION}")
+if(NOT _sophus_version)
+  set(_sophus_version_file "${CMAKE_CURRENT_SOURCE_DIR}/SOPHUS_VERSION")
+  if(EXISTS "${_sophus_version_file}")
+    file(READ "${_sophus_version_file}" _sophus_version_contents)
+    string(STRIP "${_sophus_version_contents}" _sophus_version)
+  else()
+    set(_sophus_version "1.0.0")
+    message(
+      WARNING
+        "SOPHUS_VERSION file not found; using fallback version ${_sophus_version}."
+    )
+  endif()
+  set(SOPHUS_VERSION "${_sophus_version}" CACHE STRING "Sophus version string" FORCE)
+endif()
+unset(_sophus_version_contents)
+unset(_sophus_version_file)
 project(Sophus VERSION ${SOPHUS_VERSION})
 
 include(CMakePackageConfigHelpers)
