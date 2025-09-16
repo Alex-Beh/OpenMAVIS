@@ -1,0 +1,18 @@
+## Hilti
+./Examples/Multi-Inertial/multi_inertial_euroc Vocabulary/ORBvoc.txt \
+    Examples/Multi-Inertial/HiltiChallenge2022.yaml \
+    /home/hmgics-corernd/development/datasets/HILTI/site1_handheld_1 \
+    /home/hmgics-corernd/development/datasets/HILTI/site1_handheld_1/timestamps.txt 
+
+
+./Examples/Multi-Inertial/multi_inertial_euroc Vocabulary/ORBvoc.txt \
+    Examples/Multi-Inertial/multi_stereolabs.yaml \
+    /home/hmgics-corernd/development/hmgics_dataset_newplatform/dataset/visual_slam_dataset_exported \
+    /home/hmgics-corernd/development/hmgics_dataset_newplatform/dataset/visual_slam_dataset_exported/timestamps.txt 
+
+gdb --args ./Examples/Multi-Inertial/multi_inertial_euroc Vocabulary/ORBvoc.txt \
+    Examples/Multi-Inertial/HiltiChallenge2022.yaml \
+    /home/hmgics-corernd/development/datasets/HILTI/site1_handheld_1 \
+    /home/hmgics-corernd/development/datasets/HILTI/site1_handheld_1/timestamps.txt 
+
+break __GI_abort 

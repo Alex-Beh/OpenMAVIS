@@ -250,7 +250,7 @@ protected:
     bool mbFixScale;
 
 
-    bool mnFullBAIdx;
+    unsigned int mnFullBAIdx;
 
 
 

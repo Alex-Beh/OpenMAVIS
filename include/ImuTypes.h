@@ -22,12 +22,14 @@
 
 #include <vector>
 #include <utility>
+#include <iostream>
+#include <mutex>
+
 #include <opencv2/core/core.hpp>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/Dense>
 #include <sophus/se3.hpp>
-#include <mutex>
 
 #include "SerializationUtils.h"
 
